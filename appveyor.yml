@@ -4,7 +4,7 @@ version: 1.9.{build}
 
 branches:
     only:
-        - master
+        - next
 
 environment:
     COMPILER: msvc

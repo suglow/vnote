@@ -8,6 +8,8 @@ class VLineEdit;
 class QDialogButtonBox;
 class QCheckBox;
 class VDirectory;
+class QComboBox;
+class QTextEdit;
 
 class VNewFileDialog : public QDialog
 {
@@ -28,6 +30,12 @@ private:
     void setupUI();
 
     VLineEdit *m_nameEdit;
+
+    QComboBox *m_templateCB;
+
+    // Used for template preview.
+    QTextEdit *m_templateEdit;
+
     QCheckBox *m_insertTitleCB;
 
     QPushButton *okBtn;

@@ -28,14 +28,25 @@ void VNewFileDialog::setupUI()
     }
 
     // Name.
-    QLabel *nameLabel = new QLabel(tr("Note &name:"));
     m_nameEdit = new VLineEdit(defaultName);
     QValidator *validator = new QRegExpValidator(QRegExp(VUtils::c_fileNameRegExp),
                                                  m_nameEdit);
     m_nameEdit->setValidator(validator);
     int dotIndex = defaultName.lastIndexOf('.');
     m_nameEdit->setSelection(0, (dotIndex == -1) ? defaultName.size() : dotIndex);
-    nameLabel->setBuddy(m_nameEdit);
+
+    // Template.
+    m_templateCB = new QComboBox();
+    m_templateCB->setToolTip(tr("Choose a template (guessing note type by the name)"));
+    m_templateEdit = new QTextEdit();
+    m_templateEdit->setToolTip(tr("Template preview"));
+    m_templateEdit->setReadOnly(true);
+
+    QVBoxLayout *templateLayout = new QVBoxLayout();
+    templateLayout->addWidget(m_templateCB);
+    templateLayout->addWidget(m_templateEdit);
+
+    m_templateEdit->hide();
 
     // InsertTitle.
     m_insertTitleCB = new QCheckBox(tr("Insert note name as title (for Markdown only)"));
@@ -47,8 +58,9 @@ void VNewFileDialog::setupUI()
             });
 
     QFormLayout *topLayout = new QFormLayout();
-    topLayout->addRow(nameLabel, m_nameEdit);
+    topLayout->addRow(tr("Note &name:"), m_nameEdit);
     topLayout->addWidget(m_insertTitleCB);
+    topLayout->addRow(tr("Template:"), templateLayout);
 
     m_nameEdit->setMinimumWidth(m_insertTitleCB->sizeHint().width());
 
